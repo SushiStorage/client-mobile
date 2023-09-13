@@ -1,18 +1,34 @@
 import React, { useState } from "react";
-import { Animated, Dimensions, StyleSheet, Text, View } from "react-native";
+import {
+  Animated,
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import { Screens } from "./types";
 import { RedirectionButtons } from "./redirectionButtons";
+import { useSushiRetrieval } from "@sushi/view-models";
+const { retrieveSushi } = useSushiRetrieval();
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const xOffset = new Animated.Value(0);
+
+const test = () => {
+  retrieveSushi();
+};
 
 const Screen = (props: any) => {
   return (
     <View style={styles.scrollPage}>
       <Animated.View style={[styles.screen]}>
         <Text style={styles.text}>{props.text}</Text>
+        <TouchableOpacity onPress={test}>
+          <Text>hehe</Text>
+        </TouchableOpacity>
       </Animated.View>
     </View>
   );
@@ -50,11 +66,11 @@ function Rooter() {
             listener: (event) => {
               const newIndex = Math.round(
                 // @ts-ignore
-                event.nativeEvent.contentOffset.x / SCREEN_WIDTH
+                event.nativeEvent.contentOffset.x / SCREEN_WIDTH,
               );
               setCurrentIndex(newIndex);
             },
-          }
+          },
         )}
         horizontal
         pagingEnabled
